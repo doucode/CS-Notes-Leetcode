@@ -286,31 +286,166 @@
 
 ```
 
-.[]()
+111.[二叉树的最小深度](https://leetcode-cn.com/problems/minimum-depth-of-binary-tree/description/)
 ```java
-
+    //111 二叉树的最小深度
+    //给定一个二叉树，找出其最小深度。
+    //
+    //最小深度是从根节点到最近叶子节点的最短路径上的节点数量。
+    //
+    //说明：叶子节点是指没有子节点的节点。
+    //
+    public int minDepth(TreeNode root) {
+        if (root == null) return 0;
+        int left = minDepth(root.left);
+        int right = minDepth(root.right);
+        if (left == 0 || right == 0)
+            return left + right + 1;
+        return Math.min(left, right) + 1;
+    }
 ```
 
 
-.[]()
+404.[左叶子之和](https://leetcode-cn.com/problems/sum-of-left-leaves/description/)
 ```java
-
+//404 Sum of Left Leaves
+    //统计左叶子节点的和
+    //    3
+    //   / \
+    //  9  20
+    //    /  \
+    //   15   7
+    //return 24     9+15
+    public int sumOfLeftLeaves(TreeNode root) {
+        if (root == null)
+            return 0;
+        if (isLeaf(root.left))
+            return root.left.val + sumOfLeftLeaves(root.right);
+        return sumOfLeftLeaves(root.left) + sumOfLeftLeaves(root.right);
+    }
+    private boolean isLeaf(TreeNode node) {
+        if (node == null)
+            return false;
+        return node.left == null && node.right == null;
+    }
 ```
 
 
-.[]()
+687.[最长同值路径](https://leetcode-cn.com/problems/longest-univalue-path/)
 ```java
+//687 Longest Univalue Path
+    //相同结点值的最大路径长度
+    //给定一个二叉树，找到最长的路径，这个路径中的每个节点具有相同值。 这条路径可以经过也可以不经过根节点。
+    //注意：两个节点之间的路径长度由它们之间的边数表示。
 
+    //示例 1:
+    //输入:
+    //              5
+    //             / \
+    //            4   5
+    //           / \   \
+    //          1   1   5
+    //输出:
+    //2
+
+    //示例 2:
+    //输入:
+    //              1
+    //             / \
+    //            4   5
+    //           / \   \
+    //          4   4   5
+    //输出:
+    //2
+    private int path = 0;
+    public int longestUnivaluePath(TreeNode root) {
+        dfs(root);
+        return path;
+    }
+    private int dfs(TreeNode root){
+        if (root == null) return 0;
+        int left = dfs(root.left);
+        int right = dfs(root.right);
+        int leftPath = 0, rightPath = 0;
+        if (root.left != null && root.left.val == root.val) {
+            leftPath = left + 1;
+        }
+        if (root.right != null && root.right.val == root.val) {
+            rightPath = right + 1;
+        }
+        path = Math.max(path, leftPath + rightPath);
+        return Math.max(leftPath, rightPath);
+    }
 ```
 
 
-.[]()
-```java
 
+
+337.[打家劫舍 III](https://leetcode-cn.com/problems/house-robber-iii/description/)
+```java
+//337. 打家劫舍 III
+    //输入: [3,2,3,null,3,null,1]
+    //     3
+    //    / \
+    //   2   3
+    //    \   \
+    //     3   1
+    //输出: 7
+    //解释:小偷一晚能够盗取的最高金额 = 3 + 3 + 1 = 7.
+    //示例 2:
+    //
+    //输入: [3,4,5,1,3,null,1]
+    //     3
+    //    / \
+    //   4   5
+    //  / \   \
+    // 1   3   1
+    //输出: 9
+    //解释:小偷一晚能够盗取的最高金额= 4 + 5 = 9.
+    public int rob(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        int val1 = root.val;
+        if (root.left != null) {
+            val1 += rob(root.left.left) + rob(root.left.right);
+        }
+        if (root.right != null){
+            val1 += rob(root.right.left) + rob(root.right.right);
+        }
+        int val2 = rob(root.left) + rob(root.right);
+        return Math.max(val1, val2);
+    }
 ```
 
 
-.[]()
+671.[二叉树中第二小的节点](https://leetcode-cn.com/problems/second-minimum-node-in-a-binary-tree/description/)
 ```java
-
+//671. 二叉树中第二小的节点
+    //给定一个非空特殊的二叉树，每个节点都是正数，并且每个节点的子节点数量只能为2或0。如果一个节点有两个子节点的话，那么该节点的值等于两个子节点中较小的一个。
+    //
+    //更正式地说，root.val = min(root.left.val, root.right.val) 总成立。
+    //
+    //给出这样的一个二叉树，你需要输出所有节点中的第二小的值。如果第二小的值不存在的话，输出 -1 。
+    //Input:
+    //   2
+    //  / \
+    // 2   5
+    //    / \
+    //    5  7
+    //
+    //Output: 5
+    public int findSecondMinimumValue(TreeNode root) {
+        if (root == null) return -1;
+        return help(root, root.val);                   //root.val一定是最小值
+    }
+    private int help(TreeNode root, int min) {
+        if (root == null) return -1;
+        if (root.val > min) return root.val;
+        int left = help(root.left, min);
+        int right = help(root.right, min);
+        if (left == -1) return right;
+        if (right == -1) return left;
+        return Math.min(left, right);
+    }
 ```
