@@ -142,22 +142,152 @@
     }
 ```
 
-.[]()
+445.[两数相加 II](https://leetcode-cn.com/problems/add-two-numbers-ii/description/)
 ```java
+    //445. 两数相加 II
+    //给你两个 非空 链表来代表两个非负整数。数字最高位位于链表开始位置。它们的每个节点只存储一位数字。将这两数相加会返回一个新的链表。
+    //
+    //你可以假设除了数字 0 之外，这两个数字都不会以零开头。
 
+    //示例：
+    //
+    //输入：(7 -> 2 -> 4 -> 3) + (5 -> 6 -> 4)
+    //输出：7 -> 8 -> 0 -> 7
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        Deque<Integer> stack1 = new LinkedList<Integer>();
+        Deque<Integer> stack2 = new LinkedList<Integer>();
+        while (l1 != null) {
+            stack1.push(l1.val);
+            l1 = l1.next;
+        }
+        while (l2 != null) {
+            stack2.push(l2.val);
+            l2 = l2.next;
+        }
+        int carry = 0;            //进位
+        ListNode ans = null;
+        while (!stack1.isEmpty() || !stack2.isEmpty() || carry != 0) {
+            int a = stack1.isEmpty() ? 0 : stack1.pop();
+            int b = stack2.isEmpty() ? 0 : stack2.pop();
+            int cur = a + b + carry;
+            carry = cur / 10;          //进位
+            cur %= 10;                  //取余
+            ListNode curnode = new ListNode(cur);  //将 余数 ListNode化
+            curnode.next = ans;
+            ans = curnode;
+        }
+        return ans;
+    }
 ```
 
-.[]()
+234.[回文链表](https://leetcode-cn.com/problems/palindrome-linked-list/description/)
 ```java
+   // 234. 回文链表
+    // 请判断一个链表是否为回文链表。
+    //
+    //示例 1:
+    //
+    //输入: 1->2
+    //输出: false
+    //示例 2:
+    //
+    //输入: 1->2->2->1
+    //输出: true
+    public boolean isPalindrome(ListNode head) {
+        List<Integer> vals = new ArrayList<Integer>();
 
+        // 将链表的值复制到数组中
+        ListNode currentNode = head;
+        while (currentNode != null) {
+            vals.add(currentNode.val);
+            currentNode = currentNode.next;
+        }
+        // 使用双指针判断是否回文
+        int front = 0;
+        int back = vals.size() - 1;
+        while (front < back) {
+            if (!vals.get(front).equals(vals.get(back))) {
+                return false;
+            }
+            front++;
+            back--;
+        }
+        return true;
+    }
 ```
 
-.[]()
+725.[分隔链表](https://leetcode-cn.com/problems/split-linked-list-in-parts/description/)
 ```java
+   //725. 分隔链表
+    //给定一个头结点为 root 的链表, 编写一个函数以将链表分隔为 k 个连续的部分。
+    //
+    //每部分的长度应该尽可能的相等: 任意两部分的长度差距不能超过 1，也就是说可能有些部分为 null。
+    //
+    //这k个部分应该按照在链表中出现的顺序进行输出，并且排在前面的部分的长度应该大于或等于后面的长度。
+    //
+    //返回一个符合上述规则的链表的列表。
+    //
+    //举例： 1->2->3->4, k = 5 // 5 结果 [ [1], [2], [3], [4], null ]
 
+    //输入:
+    //root = [1, 2, 3], k = 5
+    //输出: [[1],[2],[3],[],[]]
+
+    //输入:
+    //root = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], k = 3
+    //输出: [[1, 2, 3, 4], [5, 6, 7], [8, 9, 10]]
+    public ListNode[] splitListToParts(ListNode root, int k) {
+        int N = 0;
+        ListNode cur = root;
+        while (cur != null) {
+            N++;                     //节点数
+            cur = cur.next;
+        }
+        int mod = N % k;
+        int size = N / k;
+        ListNode[] ret = new ListNode[k];
+        cur = root;
+        for (int i = 0; cur != null && i < k; i++) {
+            ret[i] = cur;
+            int curSize = size + (mod-- > 0 ? 1 : 0);
+            for (int j = 0; j < curSize - 1; j++) {
+                cur = cur.next;
+            }
+            ListNode next = cur.next;
+            cur.next = null;
+            cur = next;
+        }
+        return ret;
+    }
 ```
 
-.[]()
+328.[奇偶链表](https://leetcode-cn.com/problems/odd-even-linked-list/description/)
 ```java
-
+   //328. 奇偶链表
+    //给定一个单链表，把所有的奇数节点和偶数节点分别排在一起。请注意，这里的奇数节点和偶数节点指的是节点编号的奇偶性，而不是节点的值的奇偶性。
+    //
+    //请尝试使用原地算法完成。你的算法的空间复杂度应为 O(1)，时间复杂度应为 O(nodes)，nodes 为节点总数。
+    //
+    //示例 1:
+    //
+    //输入: 1->2->3->4->5->NULL
+    //输出: 1->3->5->2->4->NULL
+    //示例 2:
+    //
+    //输入: 2->1->3->5->6->4->7->NULL
+    //输出: 2->3->6->7->1->5->4->NULL
+    public ListNode oddEvenList(ListNode head) {
+        if (head == null) {
+            return head;
+        }
+        ListNode odd = head, even = head.next, evenHead = even;
+        while (even != null && even.next != null) {
+            odd.next = odd.next.next;
+            odd = odd.next;
+            even.next = even.next.next;
+            even = even.next;
+        }
+        odd.next = evenHead;
+        return head;
+    }
 ```
