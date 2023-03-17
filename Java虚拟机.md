@@ -102,13 +102,10 @@ Garbage First收集器
 加载（Loading）   
 验证（Verification）  
 准备（Preparation）  
-解析（Resolution） 
+解析（Resolution）   
 初始化（Initialization）  
 使用（Using）  
-卸载（Unloading）  
-
-
-
+卸载（Unloading）
 
 ### 类加载过程
 包含了加载、验证、准备、解析和初始化这 5 个阶段。
