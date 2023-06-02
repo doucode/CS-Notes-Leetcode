@@ -8,17 +8,14 @@ Spring是构建 Java 应用程序的 轻量级框架
 Spring 支持 IoC和 AOP、可以很方便地对数据库进行访问、 可以很方便地集成第三方组件、对单元测试支持比较好、支持 RESTful Java 应用程序的开发。
 
 ### Spring模块
-Data Access/Integration
-
-Spring Web
-
-AOP
-
-Messaging
-
-Core Container
-
-Spring Test
+● Spring Core： 基础,可以说 Spring 其他所有的功能都需要依赖于该类库。主要提供 IoC 依赖注入功能。  
+● Spring Aspects ： 该模块为与 AspectJ 的集成提供支持。  
+● Spring AOP ：提供了面向切面的编程实现。  
+● Spring JDBC : Java 数据库连接。  
+● Spring JMS ：Java 消息服务。  
+● Spring ORM : 用于支持 Hibernate 等 ORM 工具。  
+● Spring Web : 为创建 Web 应用程序提供支持。  
+● Spring Test : 提供了对 JUnit 和 TestNG 测试的支持。  
 
 ## Spring IoC
 IoC（Inversion of control）控制反转，就是将原本在程序中手动创建对象的控制权，交由 Spring 框架来管理。

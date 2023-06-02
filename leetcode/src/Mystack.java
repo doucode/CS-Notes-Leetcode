@@ -1,38 +1,12 @@
-import java.util.Deque;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
-class Mystack {
-    private Queue<Integer> queue;
+class Main {
+    private int c;
 
-    Deque<Character> stack = new LinkedList<Character>(); //堆栈
-
-    /** Initialize your data structure here. */
-    public MyStack() {
-        queue = new LinkedList<>();
+    public static void main(String[] args){
+        int a = 1000;
+        int b = (int)(Math.random() * a);
+        System.out.println(b);
     }
 
-    /** Push element x onto stack. */
-    public void push(int x) {
-        queue.add(x);
-        int cnt = queue.size();
-        while (cnt-- > 1) {
-            queue.add(queue.poll());
-        }
-    }
-
-    /** Removes the element on top of the stack and returns that element. */
-    public int pop() {
-        return queue.remove();
-    }
-
-    /** Get the top element. */
-    public int top() {
-        return queue.peek();
-    }
-
-    /** Returns whether the stack is empty. */
-    public boolean empty() {
-        return queue.isEmpty();
-    }
 }
